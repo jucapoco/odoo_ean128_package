@@ -1,0 +1,52 @@
+<openerp>
+    <data>
+        <record id="ean_128_view" model="ir.ui.view">
+            <field name="name">id.category.list2</field>
+            <field name="model">stock.quant.package</field>
+            <field name="inherit_id" ref="stock.view_quant_package_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                    <group>
+                      <field name="ean128" string="EAN 128"/>
+                      <field name="ean_checked" string="EAN Checked"/>
+                  </group>
+              </xpath>
+          </field>
+      </record>
+      <record model="ir.actions.act_window" id="EAN_Action">
+        <field name="name">EAN Structure</field>
+        <field name="res_model">ean.structure</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="eanstructure_menu" name="EAN Structure" parent="stock.menu_stock_product"
+      action="EAN_Action"/>
+    <record model="ir.ui.view" id="ean_str_view">
+            <field name="name">ean_str.form</field>
+            <field name="model">ean.structure</field>
+            <field name="arch" type="xml">
+                <form string="EAN Structure">
+                    <sheet>
+                        <group>
+                            <field name="BP_id"/>
+                            <field name="Item_id"/>
+                        </group>
+                        <notebook>
+                            <page string="Content">
+                                <separator string="Segments Configuration"/>
+                                <field name="child_ids">
+                                    <tree string="Segments" editable="top" create="true" edit="true" delete="true">
+                                        <field name="segment_name"/>
+                                        <field name="segment_start"/>
+                                        <field name="segment_end"/>
+                                        <field name="segment_map"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+  </data>
+</openerp>

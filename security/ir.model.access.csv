@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ean128_package_ean128_package,ean128_package.ean128_package,model_ean128_package_ean128_package,,1,0,0,0
