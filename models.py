@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, fields, api
+import openerp.addons.decimal_precision as dp
+from openerp.tools.float_utils import float_round, float_compare
+
 
 # class ean128_package(models.Model):
 #     _name = 'ean128_package.ean128_package'
@@ -13,6 +16,7 @@ class Extend_package(models.Model):
 
     ean128 = fields.Char('EAN128', size=130)
     ean_checked = fields.Boolean('EAN Checked', default=False)
+    package_weight = fields.Float('Peso en Kg', (8, 2), help="Peso del paquete en Kg")
 
 
 # class Extend_Transfer_Details(models.Model):
@@ -43,6 +47,10 @@ class Ean_Structure(models.Model):
     Item_id = fields.Many2one('product.template', 'Item', required=False)
     child_ids = fields.One2many('ean.structure.lin', 'Ean_Structure_id', 'Child Structure')
 
+    @api.multi
+    def afun(self):
+        len(self)
+
 
 class Ean_Stc_Lin(models.Model):
     _name = 'ean.structure.lin'
@@ -53,3 +61,6 @@ class Ean_Stc_Lin(models.Model):
     segment_end = fields.Integer('End', help="End of the segment in the barcode", required=True)
     segment_map = fields.Char('Mapping Field', size=30, required=False)
 
+    @api.multi
+    def afun(self):
+        len(self)

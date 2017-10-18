@@ -9,9 +9,20 @@
                     <group>
                       <field name="ean128" string="EAN 128"/>
                       <field name="ean_checked" string="EAN Checked"/>
+                      <field name="package_weight" string="Peso en Kg."/>
                   </group>
               </xpath>
           </field>
+      </record>
+      <record id="ean_128_tree_view" model="ir.ui.view">
+            <field name="name">stock.quant.package.tree</field>
+            <field name="model">stock.quant.package</field>
+            <field name="inherit_id" ref="stock.view_quant_package_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='ul_id']" position="after">
+                    <field name="package_weight"/>
+                </xpath>
+            </field>
       </record>
       <record model="ir.actions.act_window" id="EAN_Action">
         <field name="name">EAN Structure</field>

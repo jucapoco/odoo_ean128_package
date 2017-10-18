@@ -16,7 +16,7 @@
     # Check https://github.com/odoo/odoo/blob/master/openerp/addons/base/module/module_data.xml
     # for the full list
     'category': 'Warehouse Tools',
-    'version': '0.2',
+    'version': '0.4',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'stock', 'product', 'procurement'],
@@ -31,9 +31,9 @@
         'demo.xml',
     ],
     'js': [
-        'static/src/js/widgetsean.js',
+        'static/src/js/widget.js',
     ],
     'qweb': [
-        'static/src/xml/ean128-t.xml',
+        'static/src/xml/picking.xml',
     ],
 }
