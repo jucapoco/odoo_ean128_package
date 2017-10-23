@@ -10,11 +10,11 @@
                       <field name="ean128" string="EAN 128"/>
                       <field name="ean_checked" string="EAN Checked"/>
                       <field name="package_weight" string="Peso en Kg."/>
-                  </group>
-              </xpath>
-          </field>
-      </record>
-      <record id="ean_128_tree_view" model="ir.ui.view">
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <record id="ean_128_tree_view" model="ir.ui.view">
             <field name="name">stock.quant.package.tree</field>
             <field name="model">stock.quant.package</field>
             <field name="inherit_id" ref="stock.view_quant_package_tree"/>
@@ -23,16 +23,26 @@
                     <field name="package_weight"/>
                 </xpath>
             </field>
-      </record>
-      <record model="ir.actions.act_window" id="EAN_Action">
-        <field name="name">EAN Structure</field>
-        <field name="res_model">ean.structure</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-    <menuitem id="eanstructure_menu" name="EAN Structure" parent="stock.menu_stock_product"
-      action="EAN_Action"/>
-    <record model="ir.ui.view" id="ean_str_view">
+        </record>
+        <record id="ean_structure_tree" model="ir.ui.view">
+            <field name="name">ean.structure.tree</field>
+            <field name="model">ean.structure</field>
+            <field name="arch" type="xml">
+                <tree string="EAN Structure Lines">
+                    <field name="BP_id"/>
+                    <field name="Item_id"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="EAN_Action">
+            <field name="name">EAN Structure</field>
+            <field name="res_model">ean.structure</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="ean_structure_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="eanstructure_menu" name="EAN Structure" parent="stock.menu_stock_product" action="EAN_Action"/>
+        <record model="ir.ui.view" id="ean_str_view">
             <field name="name">ean_str.form</field>
             <field name="model">ean.structure</field>
             <field name="arch" type="xml">
@@ -59,5 +69,35 @@
                 </form>
             </field>
         </record>
-  </data>
+        <record id="ean_segments_tree" model="ir.ui.view">
+            <field name="name">ean.segments.tree</field>
+            <field name="model">ean.segments</field>
+            <field name="arch" type="xml">
+                <tree string="EAN Structure Lines">
+                    <field name="segment"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="EANSegment_Action">
+            <field name="name">EAN Segments</field>
+            <field name="res_model">ean.segments</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="ean_segments_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="eansegments_menu" name="EAN Segments" parent="stock.menu_stock_product" action="EANSegment_Action"/>
+        <record model="ir.ui.view" id="ean_seg_view">
+            <field name="name">ean_seg.form</field>
+            <field name="model">ean.segments</field>
+            <field name="arch" type="xml">
+                <form string="EAN Segments">
+                    <sheet>
+                        <group>
+                            <field name="segment"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
 </openerp>

@@ -19,3 +19,7 @@ packages = self.env['stock.quant.package'].search(['&', ('ean_checked', '=', Fal
 #ciclo para actualizar los paquetes
 for pack in packages:
     pack.write({'ean_checked': True})
+
+
+
+# segment_name = fields.Char('Segment Name', size=30, required=True)

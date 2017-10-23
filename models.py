@@ -52,11 +52,21 @@ class Ean_Structure(models.Model):
         len(self)
 
 
+class Ean_Segments(models.Model):
+    _name = 'ean.segments'
+
+    segment = fields.Char('Segment Name', size=30, required=True)
+
+    @api.multi
+    def afun(self):
+        len(self)
+
+
 class Ean_Stc_Lin(models.Model):
     _name = 'ean.structure.lin'
 
     Ean_Structure_id = fields.Many2one('ean.structure', string='Parent structure')
-    segment_name = fields.Char('Segment Name', size=30, required=True)
+    segment_name = fields.Many2one('ean.segments', 'segment', required=True)
     segment_start = fields.Integer('Start', help="Start of de segment in the barcode", required=True)
     segment_end = fields.Integer('End', help="End of the segment in the barcode", required=True)
     segment_map = fields.Char('Mapping Field', size=30, required=False)
