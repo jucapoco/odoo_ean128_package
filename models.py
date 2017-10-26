@@ -51,6 +51,13 @@ class Ean_Structure(models.Model):
     def afun(self):
         len(self)
 
+    @api.multi
+    def ean_process(self):
+        packages = self.env['stock.quant.package'].search(['&', ('ean_checked', '=', False), ('ean128', '!=', False)])
+        for pack in packages:
+            pack.write({'ean_checked': True})
+        return True
+
 
 class Ean_Segments(models.Model):
     _name = 'ean.segments'

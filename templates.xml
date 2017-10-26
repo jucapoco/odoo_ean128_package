@@ -65,6 +65,7 @@
                                 </field>
                             </page>
                         </notebook>
+                        <button string="Process" type="object" name="ean_process"/>
                     </sheet>
                 </form>
             </field>
