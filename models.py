@@ -2,6 +2,8 @@
 
 from openerp import models, fields, api
 import openerp.addons.decimal_precision as dp
+import datetime
+from datetime import timedelta
 from openerp.tools.float_utils import float_round, float_compare
 
 
@@ -51,6 +53,13 @@ class Ean_Structure(models.Model):
     def afun(self):
         len(self)
 
+    def name_get(self, cr, uid, ids, context=None):
+        res = []
+        structures = self.browse(cr, uid, ids, context)
+        for struc in structures:
+            res.append((struc.id, struc.BP_id))
+        return res
+
     @api.multi
     def ean_process(self):
         cr = self.env.cr
@@ -64,6 +73,8 @@ class Ean_Structure(models.Model):
         tmp_lot_id = 0
         tmp_struct_id = 0
         tmp_peso = 0
+        tmp_lot_name = ""
+        tmp_lot_date = ""
         query = """SELECT T3.product_id, T3.partner_id, T0.lot_id FROM public.stock_quant T0
         INNER JOIN
         (SELECT T11.quant_id, T11.move_id FROM public.stock_quant_move_rel T11) T1 ON T0.id=T1.quant_id
@@ -116,6 +127,18 @@ class Ean_Structure(models.Model):
             tmp_peso = float(tmp_ean128[seg_peso_start:seg_peso_end])
             pack.write({'ean_checked': True})
             pack.write({'package_weight': tmp_peso})
+            lots = self.env['stock.production.lot'].search([('id', '=', tmp_lot_id)])
+            tmp_lot_name = tmp_ean128[seg_lote_start:seg_lote_end]
+            sbstr = tmp_ean128[seg_fecha_start:seg_fecha_end] + '000000'
+            adatetime = datetime.datetime.strptime(sbstr, "%Y%m%d%H%M%S")
+            adatetime = adatetime + timedelta(days=1)
+            tmp_lot_date = fields.Datetime.to_string(adatetime)
+            for lot in lots:
+                lot.write({'name': tmp_lot_name})
+                lot.write({'life_date': tmp_lot_date})
+                lot.write({'use_date': tmp_lot_date})
+                lot.write({'removal_date': tmp_lot_date})
+                lot.write({'alert_date': tmp_lot_date})
         return True
 
 

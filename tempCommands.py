@@ -74,3 +74,16 @@ def ean_process(self):
         for pack in packages:
             pack.write({'ean_checked': True})
         return True
+
+
+
+#Temp
+
+tmp_Datetime = datetime.datetime.strptime(tmp_ean128[seg_fecha_start:seg_fecha_end] + '000000', "%Y%m%d%H%M%S")
+            tmp_DatetimeModified = tmp_Datetime + timedelta(days=1)
+            tmp_lot_date = fields.Datetime.to_string(tmp_DatetimeModified)
+            for lot in lots:
+                lot.write({'name': tmp_lot_name})
+                lot.write({'life_date': tmp_lot_date})
+        return True
+
