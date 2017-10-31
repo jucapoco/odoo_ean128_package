@@ -62,7 +62,7 @@ class Ean_Structure(models.Model):
 
     @api.multi
     def ean_process(self):
-        cr = self.env.cr
+        crr = self.env.cr
         packid = 0
         tmp_ean128 = ""
         seg_lote_id = 0
@@ -106,8 +106,8 @@ class Ean_Structure(models.Model):
             packid = pack.id
             tmp_ean128 = pack.ean128
             tmpquery = query.replace("%packid%", str(packid))
-            cr.execute(tmpquery)
-            resultQuery = cr.fetchall()
+            crr.execute(tmpquery)
+            resultQuery = crr.fetchall()
             tmp_product_id = resultQuery[0][0]
             tmp_partner_id = resultQuery[0][1]
             tmp_lot_id = resultQuery[0][2]
